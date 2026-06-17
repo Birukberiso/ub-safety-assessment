@@ -59,7 +59,14 @@ export default function Results({ name, order, answers, elapsed, onReset }) {
       sec5: `${secScores[5].got}/${secScores[5].total}`,
       sec6: `${secScores[6].got}/${secScores[6].total}`,
     };
-    fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    // Google Apps Script requires form-encoded body to avoid CORS preflight issues
+    const formBody = 'payload=' + encodeURIComponent(JSON.stringify(payload));
+    fetch(SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: formBody,
+    })
       .then(() => setSyncStatus('saved'))
       .catch(() => setSyncStatus('error'));
   // eslint-disable-next-line react-hooks/exhaustive-deps
