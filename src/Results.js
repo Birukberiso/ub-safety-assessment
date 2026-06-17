@@ -59,7 +59,9 @@ export default function Results({ name, order, answers, elapsed, onReset }) {
       sec5: `${secScores[5].got}/${secScores[5].total}`,
       sec6: `${secScores[6].got}/${secScores[6].total}`,
     };
-    // Google Apps Script requires form-encoded body to avoid CORS preflight issues
+    // Submit to Google Apps Script
+    // Uses form-encoded body so Apps Script reads via e.parameter.payload
+    // mode: no-cors is required for cross-origin requests to Google's servers
     const formBody = 'payload=' + encodeURIComponent(JSON.stringify(payload));
     fetch(SHEETS_URL, {
       method: 'POST',
