@@ -62,6 +62,7 @@ export default function Results({ name, order, answers, elapsed, onReset }) {
     fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then(() => setSyncStatus('saved'))
       .catch(() => setSyncStatus('error'));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function openPin() { setPinOpen(true); setPinVal(''); setPinErr(''); setTimeout(() => pinRef.current?.focus(), 100); }
